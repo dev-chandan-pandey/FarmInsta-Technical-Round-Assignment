@@ -1401,7 +1401,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { deleteCreator } from '../store/contentCreatorSlice';
 import {
   Box, Button, Flex, Grid, Input, Select, Text, VStack, HStack, IconButton, FormControl, FormLabel,
-  useColorModeValue, Stack, useToast
+  Stack, useToast
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
@@ -1459,6 +1459,10 @@ const ContentCreatorList = () => {
       setCurrentPage(pageNumber);
     }
   };
+
+  // Define colors directly or use a theme approach
+  const bgColor = "#f5f5f5"; // Light background color
+  const hoverBgColor = "#e0e0e0"; // Background color on hover
 
   return (
     <VStack spacing={6} w="full" p={5}>
@@ -1523,9 +1527,9 @@ const ContentCreatorList = () => {
               borderWidth={1}
               borderRadius="lg"
               boxShadow="lg"
-              bg={useColorModeValue("gray.50", "gray.700")}
+              bg={bgColor}
               w="full"
-              _hover={{ transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
+              _hover={{ bg: hoverBgColor, transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
             >
               <Flex justify="space-between" align="center">
                 <Stack spacing={3}>
