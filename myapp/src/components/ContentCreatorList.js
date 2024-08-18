@@ -1210,10 +1210,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { deleteCreator } from '../store/contentCreatorSlice';
 import {
   Box, Button, Flex, Grid, Input, Select, Text, VStack, HStack, IconButton, FormControl, FormLabel,
-  useColorModeValue, Stack
+  useColorModeValue, Stack, useToast
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import { useToast } from '@chakra-ui/react';
 
 const ContentCreatorList = () => {
   const toast = useToast();
@@ -1395,3 +1394,4 @@ const ContentCreatorList = () => {
 };
 
 export default ContentCreatorList;
+
