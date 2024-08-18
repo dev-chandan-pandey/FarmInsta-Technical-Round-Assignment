@@ -1204,13 +1204,204 @@
 // };
 
 // export default ContentCreatorList;
+// import React, { useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { Link as RouterLink } from 'react-router-dom';
+// import { deleteCreator } from '../store/contentCreatorSlice';
+// import {
+//   Box, Button, Flex, Grid, Input, Select, Text, VStack, HStack, IconButton, FormControl, FormLabel,
+//   useColorModeValue, Stack, useToast
+// } from '@chakra-ui/react';
+// import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+
+// const ContentCreatorList = () => {
+//   const toast = useToast();
+//   const dispatch = useDispatch();
+//   const creators = useSelector(state => state.contentCreators.creators);
+
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [filters, setFilters] = useState({
+//     language: '',
+//     education: '',
+//     specialization: ''
+//   });
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const creatorsPerPage = 5;
+
+//   const handleDelete = (id) => {
+//     if (window.confirm("Are you sure you want to delete this creator?")) {
+//       dispatch(deleteCreator(id));
+//       toast({
+//         title: "Creator deleted.",
+//         description: "The content creator has been successfully deleted.",
+//         status: "success",
+//         duration: 5000,
+//         isClosable: true,
+//       });
+//     }
+//   };
+
+//   const filteredCreators = creators.filter(creator => {
+//     const creatorLanguage = creator.languages ? creator.languages.toLowerCase() : '';
+//     const creatorEducation = creator.education ? creator.education.toLowerCase() : '';
+//     const creatorSpecialization = creator.specialization ? creator.specialization.toLowerCase() : '';
+//     const lowerSearchQuery = searchQuery.toLowerCase();
+
+//     return (
+//       (!filters.language || creatorLanguage === filters.language.toLowerCase()) &&
+//       (!filters.education || creatorEducation === filters.education.toLowerCase()) &&
+//       (!filters.specialization || creatorSpecialization === filters.specialization.toLowerCase()) &&
+//       (creator.name.toLowerCase().includes(lowerSearchQuery) ||
+//         creator.email.toLowerCase().includes(lowerSearchQuery) ||
+//         creator.description.toLowerCase().includes(lowerSearchQuery))
+//     );
+//   });
+
+//   // Calculate pagination variables
+//   const totalPages = Math.ceil(filteredCreators.length / creatorsPerPage);
+//   const indexOfLastCreator = currentPage * creatorsPerPage;
+//   const indexOfFirstCreator = indexOfLastCreator - creatorsPerPage;
+//   const currentCreators = filteredCreators.slice(indexOfFirstCreator, indexOfLastCreator);
+
+//   const paginate = (pageNumber) => {
+//     if (pageNumber > 0 && pageNumber <= totalPages) {
+//       setCurrentPage(pageNumber);
+//     }
+//   };
+
+//   return (
+//     <VStack spacing={6} w="full" p={5}>
+//       <Input 
+//         placeholder="Search creators..." 
+//         value={searchQuery} 
+//         onChange={(e) => setSearchQuery(e.target.value)} 
+//         mb={4}
+//         variant="filled"
+//         size="lg"
+//       />
+
+//       <HStack spacing={4} mb={4}>
+//         <FormControl>
+//           <Select 
+//             placeholder="Filter by Language"
+//             variant="outline"
+//             onChange={(e) => setFilters({ ...filters, language: e.target.value })}
+//           >
+//             <option value="">All Languages</option>
+//             <option value="english">English</option>
+//             <option value="spanish">Spanish</option>
+//             <option value="french">French</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl>
+//           <Select 
+//             placeholder="Filter by Education"
+//             variant="outline"
+//             onChange={(e) => setFilters({ ...filters, education: e.target.value })}
+//           >
+//             <option value="">All Education</option>
+//             <option value="bachelor">Bachelor's</option>
+//             <option value="master">Master's</option>
+//             <option value="phd">PhD</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl>
+//           <Select 
+//             placeholder="Filter by Specialization"
+//             variant="outline"
+//             onChange={(e) => setFilters({ ...filters, specialization: e.target.value })}
+//           >
+//             <option value="">All Specializations</option>
+//             <option value="marketing">Marketing</option>
+//             <option value="design">Design</option>
+//             <option value="development">Development</option>
+//           </Select>
+//         </FormControl>
+//       </HStack>
+
+//       {currentCreators.length === 0 ? (
+//         <Text>No Content Creators found</Text>
+//       ) : (
+//         <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6} w="full">
+//           {currentCreators.map(creator => (
+//             <Box
+//               key={creator.id}
+//               p={6}
+//               borderWidth={1}
+//               borderRadius="lg"
+//               boxShadow="lg"
+//               bg={useColorModeValue("gray.50", "gray.700")}
+//               w="full"
+//               _hover={{ transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
+//             >
+//               <Flex justify="space-between" align="center">
+//                 <Stack spacing={3}>
+//                   <Text fontWeight="bold" fontSize="xl">{creator.name}</Text>
+//                   <Text>Email: {creator.email}</Text>
+//                   <Text>Description: {creator.description}</Text>
+//                   <Text>Languages: {creator.languages}</Text>
+//                   <Text>Education: {creator.education}</Text>
+//                   <Text>Specialization: {creator.specialization}</Text>
+//                   <HStack spacing={3}>
+//                     <IconButton
+//                       as={RouterLink}
+//                       to={`/edit/${creator.id}`}
+//                       aria-label="Edit"
+//                       icon={<EditIcon />}
+//                       colorScheme="blue"
+//                       _hover={{ bg: "blue.600" }}
+//                     />
+//                     <IconButton
+//                       onClick={() => handleDelete(creator.id)}
+//                       aria-label="Delete"
+//                       icon={<DeleteIcon />}
+//                       colorScheme="red"
+//                       _hover={{ bg: "red.600" }}
+//                     />
+//                   </HStack>
+//                 </Stack>
+//               </Flex>
+//             </Box>
+//           ))}
+//         </Grid>
+//       )}
+
+//       {filteredCreators.length > 0 && (
+//         <HStack mt={8} justify="center" spacing={4}>
+//           <Button
+//             onClick={() => paginate(currentPage - 1)}
+//             disabled={currentPage === 1}
+//             variant="outline"
+//             colorScheme="blue"
+//           >
+//             Previous
+//           </Button>
+//           <Text>Page {currentPage} of {totalPages}</Text>
+//           <Button
+//             onClick={() => paginate(currentPage + 1)}
+//             disabled={currentPage === totalPages}
+//             variant="solid"
+//             colorScheme="blue"
+//           >
+//             Next
+//           </Button>
+//         </HStack>
+//       )}
+//     </VStack>
+//   );
+// };
+
+// export default ContentCreatorList;
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { deleteCreator } from '../store/contentCreatorSlice';
 import {
   Box, Button, Flex, Grid, Input, Select, Text, VStack, HStack, IconButton, FormControl, FormLabel,
-  useColorModeValue, Stack, useToast
+  Stack, useToast
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
@@ -1268,6 +1459,10 @@ const ContentCreatorList = () => {
       setCurrentPage(pageNumber);
     }
   };
+
+  // Define colors directly or use a theme approach
+  const bgColor = "#f5f5f5"; // Light background color
+  const hoverBgColor = "#e0e0e0"; // Background color on hover
 
   return (
     <VStack spacing={6} w="full" p={5}>
@@ -1332,9 +1527,9 @@ const ContentCreatorList = () => {
               borderWidth={1}
               borderRadius="lg"
               boxShadow="lg"
-              bg={useColorModeValue("gray.50", "gray.700")}
+              bg={bgColor}
               w="full"
-              _hover={{ transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
+              _hover={{ bg: hoverBgColor, transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
             >
               <Flex justify="space-between" align="center">
                 <Stack spacing={3}>
@@ -1394,4 +1589,3 @@ const ContentCreatorList = () => {
 };
 
 export default ContentCreatorList;
-
