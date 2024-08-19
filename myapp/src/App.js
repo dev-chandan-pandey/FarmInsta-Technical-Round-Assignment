@@ -56,6 +56,36 @@
 // }
 
 // export default App;
+// import React from 'react';
+// import { ChakraProvider, Box } from '@chakra-ui/react';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import ContentCreatorList from './components/ContentCreatorList';
+// import ContentCreatorProfileEdit from './components/ContentCreatorProfileEdit';
+// import ContentCreatorProfileView from './components/ContentCreatorProfileView';
+// import Sidebar from './components/Sidebar';
+// import theme from './theme';
+
+// function App() {
+//   return (
+//     <ChakraProvider theme={theme}>
+//       <Router>
+//         <Box display="flex">
+//           <Sidebar />
+//           <Box ml="250px" w="full" p={5}>
+//             <Routes>
+//               <Route path="/" element={<ContentCreatorList />} />
+//               <Route path="/create" element={<ContentCreatorProfileEdit />} />
+//               <Route path="/edit/:id" element={<ContentCreatorProfileEdit />} />
+//               <Route path="/view/:id" element={<ContentCreatorProfileView />} />
+//             </Routes>
+//           </Box>
+//         </Box>
+//       </Router>
+//     </ChakraProvider>
+//   );
+// }
+
+// export default App;
 import React from 'react';
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -69,9 +99,15 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Router>
-        <Box display="flex">
+        <Box display="flex" minHeight="100vh">
           <Sidebar />
-          <Box ml="250px" w="full" p={5}>
+          <Box
+            ml={{ base: 0, md: "250px" }}
+            w="full"
+            p={5}
+            transition="margin 0.3s ease"
+            bg="gray.100"
+          >
             <Routes>
               <Route path="/" element={<ContentCreatorList />} />
               <Route path="/create" element={<ContentCreatorProfileEdit />} />
