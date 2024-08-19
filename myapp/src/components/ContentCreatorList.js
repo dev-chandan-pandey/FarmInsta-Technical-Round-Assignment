@@ -1838,8 +1838,17 @@ const ContentCreatorList = () => {
   const creatorsPerPage = 5;
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("#f5f5f5", "#2D3748");
-  const hoverBgColor = useColorModeValue("#e0e0e0", "#4A5568");
+  
+  // New color variables for better theme support
+  const bgColor = useColorModeValue("gray.500", "teal.500");
+  const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
+  const borderColor = useColorModeValue("gray.300", "gray.600");
+  const hoverBgColor = useColorModeValue("#e2e8f0", "#2D3748");
+  const selectBgColor = useColorModeValue("white", "#2D3748");
+  const selectTextColor = useColorModeValue("gray.800", "whiteAlpha.900");
+  const cardBgColor = useColorModeValue("white", "#2D3748");
+  const cardTextColor = useColorModeValue("gray.800", "whiteAlpha.900");
+  const cardShadow = useColorModeValue("md", "dark-lg");
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this creator?")) {
@@ -1886,8 +1895,12 @@ const ContentCreatorList = () => {
       spacing={6}
       w="full"
       p={5}
-      pt={{ base: "80px", md: "20px" }} // Top padding for mobile and larger screens
-      pl={{ base: "0", md: "250px" }} // Left padding to accommodate sidebar on larger screens
+      pt={{ base: "80px", md: "20px" }}
+      pl={{ base: "0", md: "250px" }}
+      bg={bgColor}
+      color={textColor}
+      borderRadius="md"
+      shadow={cardShadow}
     >
       <Flex w="full" justify="space-between" align="center" mb={4}>
         <Input 
@@ -1896,7 +1909,9 @@ const ContentCreatorList = () => {
           onChange={(e) => setSearchQuery(e.target.value)} 
           variant="filled"
           size="lg"
-          borderColor="gray.300"
+          borderColor={borderColor}
+          bg={selectBgColor}
+          color={textColor}
         />
 
         <IconButton
@@ -1904,7 +1919,7 @@ const ContentCreatorList = () => {
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
           size="lg"
-          colorScheme={colorMode === 'light' ?"purple":"teal"}
+          colorScheme={colorMode === 'light' ? "teal" : "purple"}
         />
       </Flex>
 
@@ -1932,13 +1947,14 @@ const ContentCreatorList = () => {
             placeholder="Filter by Language"
             variant="outline"
             onChange={(e) => setFilters({ ...filters, language: e.target.value })}
-            borderColor="gray.300"
+            borderColor={borderColor}
+            bg={selectBgColor}
+            color={selectTextColor}
           >
             <option value="">All Languages</option>
             <option value="english">English</option>
             <option value="spanish">Spanish</option>
             <option value="french">French</option>
-            {/* Add more options as needed */}
           </Select>
         </FormControl>
         <FormControl>
@@ -1946,13 +1962,14 @@ const ContentCreatorList = () => {
             placeholder="Filter by Education"
             variant="outline"
             onChange={(e) => setFilters({ ...filters, education: e.target.value })}
-            borderColor="gray.300"
+            borderColor={borderColor}
+            bg={selectBgColor}
+            color={selectTextColor}
           >
             <option value="">All Education Levels</option>
             <option value="bachelor">Bachelor's</option>
             <option value="master">Master's</option>
             <option value="phd">PhD</option>
-            {/* Add more options as needed */}
           </Select>
         </FormControl>
         <FormControl>
@@ -1960,13 +1977,14 @@ const ContentCreatorList = () => {
             placeholder="Filter by Specialization"
             variant="outline"
             onChange={(e) => setFilters({ ...filters, specialization: e.target.value })}
-            borderColor="gray.300"
+            borderColor={borderColor}
+            bg={selectBgColor}
+            color={selectTextColor}
           >
             <option value="">All Specializations</option>
             <option value="marketing">Marketing</option>
             <option value="design">Design</option>
             <option value="writing">Writing</option>
-            {/* Add more options as needed */}
           </Select>
         </FormControl>
       </HStack>
@@ -1976,11 +1994,13 @@ const ContentCreatorList = () => {
           <Box
             key={creator.id}
             p={5}
-            shadow="md"
+            shadow={cardShadow}
             borderWidth="1px"
             borderRadius="md"
-            bg={bgColor}
-            _hover={{ bg: hoverBgColor }}
+            bg={cardBgColor}
+            color={cardTextColor}
+            // _hover={{ bg: hoverBgColor }}
+            _hover={{ transform: "scale(1.02)", transition: "0.3s ease-in-out" }}
           >
             <Flex justify="space-between" align="center" mb={4}>
               <Text fontWeight="bold" fontSize="xl">{creator.name}</Text>
@@ -1991,6 +2011,7 @@ const ContentCreatorList = () => {
                     icon={<EditIcon />} 
                     variant="outline"
                     colorScheme="blue"
+                      _hover={{ bg: "blue.600" }}
                     size="sm"
                   />
                 </RouterLink>
@@ -1999,6 +2020,7 @@ const ContentCreatorList = () => {
                   icon={<DeleteIcon />} 
                   variant="outline"
                   colorScheme="red"
+                      _hover={{ bg: "red.600" }}
                   size="sm"
                   onClick={() => handleDelete(creator.id)}
                 />
