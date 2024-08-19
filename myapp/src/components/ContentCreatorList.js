@@ -1904,7 +1904,7 @@ const ContentCreatorList = () => {
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
           size="lg"
-          colorScheme={colorMode === 'light' ? "teal" : "purple"}
+          colorScheme={colorMode === 'light' ?"purple":"teal"}
         />
       </Flex>
 

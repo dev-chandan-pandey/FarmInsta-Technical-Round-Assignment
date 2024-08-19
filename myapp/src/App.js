@@ -106,7 +106,7 @@ function App() {
             w="full"
             p={5}
             transition="margin 0.3s ease"
-            bg="gray.100"
+            bg="gray.400"
           >
             <Routes>
               <Route path="/" element={<ContentCreatorList />} />

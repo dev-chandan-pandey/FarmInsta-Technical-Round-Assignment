@@ -521,9 +521,10 @@ const ContentCreatorProfileEdit = () => {
 
   return (
     <VStack
-      spacing={4}
+      mt={{ base: "60px", md:-5 }}
+      spacing={2}
       w={{ base: 'full', md: '80%', lg: '60%' }}
-      p={5}
+      p={3}
       mx="auto"
     >
       <FormControl isRequired id="name">
